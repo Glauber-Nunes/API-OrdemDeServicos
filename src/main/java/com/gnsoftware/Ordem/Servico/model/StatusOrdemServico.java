@@ -1,7 +1,6 @@
 package com.gnsoftware.Ordem.Servico.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,19 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+@NoArgsConstructor
+public class StatusOrdemServico {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String cpf;
-    private String rg;
-    private String telefone;
-    private String email;
-    private String cidade;
-
 }

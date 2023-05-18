@@ -1,10 +1,19 @@
 package com.gnsoftware.Ordem.Servico.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrdemServico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +43,10 @@ public class OrdemServico {
     private Servico servico;
     @Column(columnDefinition = "TEXT")
     private String Observacoes;
-    private Double valorTotalOrdem = 0.0;
+    private Double valorTotalOrdem = 0d;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private StatusOrdemServico statusOrdemServico;
 
     private Double calculaValorTotalOrdem() {
 

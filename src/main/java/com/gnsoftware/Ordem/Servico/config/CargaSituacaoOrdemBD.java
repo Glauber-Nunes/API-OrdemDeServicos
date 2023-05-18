@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @Configuration
-public class CargaBD implements CommandLineRunner {
+public class CargaSituacaoOrdemBD implements CommandLineRunner {
 
     @Autowired
     private SituacaoOrdemRepository situacaoOrdemRepository;
