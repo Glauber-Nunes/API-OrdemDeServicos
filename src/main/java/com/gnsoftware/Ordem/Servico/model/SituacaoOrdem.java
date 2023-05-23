@@ -1,6 +1,7 @@
 package com.gnsoftware.Ordem.Servico.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class SituacaoOrdem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

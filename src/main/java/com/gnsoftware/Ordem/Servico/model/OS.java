@@ -14,7 +14,8 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrdemServico {
+@Table(name = "Ordem_Servico")
+public class OS {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,24 +35,20 @@ public class OrdemServico {
     private Tecnico tecnico;
     private Instant DataDoServico = Instant.now();
     private Double quantidade;
-    private Double valorUnitario;
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
+
     @ManyToOne
     @JoinColumn(name = "servico_id")
     private Servico servico;
+
+    @ManyToOne
+    @JoinColumn(name = "produtoServico_id")
+    private Produto produto;
+
     @Column(columnDefinition = "TEXT")
-    private String Observacoes;
-    private Double valorTotalOrdem = 0d;
+    private String observacoes;
     @ManyToOne
     @JoinColumn(name = "status_id")
     private StatusOrdemServico statusOrdemServico;
 
-    private Double calculaValorTotalOrdem() {
-
-        valorTotalOrdem = (valorUnitario * quantidade);
-
-        return valorTotalOrdem;
-    }
+    private Double valorTotalOrdem = 0d;
 }
