@@ -4,6 +4,7 @@ import com.gnsoftware.Ordem.Servico.dto.ClienteForm;
 import com.gnsoftware.Ordem.Servico.model.Cliente;
 import com.gnsoftware.Ordem.Servico.repository.ClienteRepository;
 import com.gnsoftware.Ordem.Servico.services.ClienteService;
+import com.gnsoftware.Ordem.Servico.services.exceptions.DataIntegrityViolationException;
 import com.gnsoftware.Ordem.Servico.services.exceptions.ModelNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,10 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public Cliente save(ClienteForm clienteForm) {
+    public Cliente save(ClienteForm clienteForm, DataIntegrityViolationException d) {
+
+        this.findByExistsCPF(clienteForm); // verifica se o cpf ja esta cadastrado
+        this.findByExistsEmail(clienteForm, d); // verifica se o email ja esta cadastrado
 
         return clienteRepository.save(
                 Cliente.builder()
@@ -30,7 +34,7 @@ public class ClienteServiceImpl implements ClienteService {
                         .rg(clienteForm.getRg())
                         .telefone(clienteForm.getTelefone())
                         .email(clienteForm.getEmail())
-                        .cidade(clienteForm.getCidade())
+                        .endereco(clienteForm.getEndereco())
                         .build()
         );
 
@@ -50,7 +54,7 @@ public class ClienteServiceImpl implements ClienteService {
                         .rg(clienteForm.getRg() != null ? clienteForm.getRg() : clienteBanco.getRg())
                         .telefone(clienteForm.getTelefone() != null ? clienteForm.getTelefone() : clienteBanco.getTelefone())
                         .email(clienteForm.getEmail() != null ? clienteForm.getEmail() : clienteBanco.getEmail())
-                        .cidade(clienteForm.getCidade() != null ? clienteForm.getCidade() : clienteBanco.getCidade())
+                        .endereco(clienteForm.getEndereco() != null ? clienteForm.getEndereco() : clienteBanco.getEndereco())
                         .build()
         );
 
@@ -61,9 +65,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         Optional<Cliente> cliente = clienteRepository.findById(id);
 
-        if (cliente == null) throw new ModelNotFound("CLIENTE NÃO ENCONTRADO");
-
-        return cliente.get();
+        return cliente.orElseThrow(() -> new ModelNotFound("CLIENTE NÃO ENCONTRADO"));
 
     }
 
@@ -77,5 +79,17 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = this.findById(id);
 
         clienteRepository.delete(cliente);
+    }
+
+    private void findByExistsCPF(ClienteForm clienteForm) {
+        if (clienteRepository.existsByCpf(clienteForm.getCpf())) {
+            throw new DataIntegrityViolationException("CPF Ja Cadastrado na base de dados");
+        }
+    }
+
+    private void findByExistsEmail(ClienteForm clienteForm, DataIntegrityViolationException d) {
+        if (clienteRepository.existsByemail(clienteForm.getEmail())) {
+            throw new DataIntegrityViolationException("Email Ja Cadastrado na base de dados");
+        }
     }
 }

@@ -8,7 +8,9 @@ import com.gnsoftware.Ordem.Servico.services.exceptions.ModelNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class SituacaoOrdemImpl implements SituacaoOrdemService {
@@ -17,10 +19,15 @@ public class SituacaoOrdemImpl implements SituacaoOrdemService {
     private SituacaoOrdemRepository situacaoOrdemRepository;
 
     @Override
-    public SituacaoOrdem findById(Long ID) {
-        Optional<SituacaoOrdem> situacaoOrdem = situacaoOrdemRepository.findById(ID);
+    public SituacaoOrdem findById(Long id) {
+        Optional<SituacaoOrdem> situacaoOrdem = situacaoOrdemRepository.findById(id);
 
         return situacaoOrdem.orElseThrow(() -> new ModelNotFound("Not Found"));
+    }
+
+    @Override
+    public List<SituacaoOrdem> findAll() {
+        return situacaoOrdemRepository.findAll();
     }
 
     @Override

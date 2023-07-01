@@ -4,6 +4,7 @@ import com.gnsoftware.Ordem.Servico.dto.AtendenteForm;
 import com.gnsoftware.Ordem.Servico.model.Atendente;
 import com.gnsoftware.Ordem.Servico.repository.AtendenteRepository;
 import com.gnsoftware.Ordem.Servico.services.AtendenteService;
+import com.gnsoftware.Ordem.Servico.services.exceptions.DataIntegrityViolationException;
 import com.gnsoftware.Ordem.Servico.services.exceptions.ModelNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class AtendenteServiceImpl implements AtendenteService {
     @Transactional
     public Atendente save(AtendenteForm atendenteForm) {
 
+        this.existsByCpf(atendenteForm);
         return atendenteRepository.save(Atendente.builder()
                 .id(null)
                 .nome(atendenteForm.getNome())
@@ -54,7 +56,7 @@ public class AtendenteServiceImpl implements AtendenteService {
 
     @Override
     public List<Atendente> findAll() {
-        return null;
+        return atendenteRepository.findAll();
     }
 
     @Override
@@ -62,5 +64,11 @@ public class AtendenteServiceImpl implements AtendenteService {
         Atendente atendente = this.findById(id);
 
         atendenteRepository.delete(atendente);
+    }
+
+    private void existsByCpf(AtendenteForm atendente) {
+        if (atendenteRepository.existsByCpf(atendente.getCpf())) {
+            throw new DataIntegrityViolationException("CPF Ja Cadastrado na base de dados");
+        }
     }
 }

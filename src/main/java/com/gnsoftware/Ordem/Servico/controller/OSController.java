@@ -3,11 +3,14 @@ package com.gnsoftware.Ordem.Servico.controller;
 import com.gnsoftware.Ordem.Servico.dto.OSForm;
 import com.gnsoftware.Ordem.Servico.model.OS;
 import com.gnsoftware.Ordem.Servico.services.OSService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/ordem_servicos")
 public class OSController {
@@ -23,5 +26,30 @@ public class OSController {
     @PostMapping
     public ResponseEntity<OS> save(@RequestBody OSForm OSForm) {
         return ResponseEntity.status(HttpStatus.CREATED).body(OSService.save(OSForm));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OS>> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(OSService.findAll());
+    }
+
+    @PutMapping("/finalizar-servico/{id}")
+    public ResponseEntity<String> finalizaServico(@PathVariable Long id,@RequestBody OS os) {
+        OSService.finalizaServico(id,os);
+
+        JSONObject response = new JSONObject();
+        response.put("message", "FINALIZADO COM SUCESSO");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response.toString());
+    }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<String> delete(@PathVariable Long id){
+        OSService.delete(id);
+
+        JSONObject response = new JSONObject();
+        response.put("message", "EXCLUIDO COM SUCESSO");
+
+        return ResponseEntity.status(HttpStatus.OK).body(response.toString());
     }
 }

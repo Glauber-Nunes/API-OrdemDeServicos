@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/atendentes")
 public class AtendenteController {
@@ -18,12 +20,12 @@ public class AtendenteController {
     private AtendenteService atendenteService;
 
     @PostMapping
-    public ResponseEntity<Atendente> save(@RequestBody AtendenteForm atendenteForm) {
+    public ResponseEntity<Atendente> save(@Valid @RequestBody AtendenteForm atendenteForm) {
         return ResponseEntity.status(HttpStatus.CREATED).body(atendenteService.save(atendenteForm));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Atendente> update(@PathVariable Long id, @RequestBody AtendenteForm atendenteForm) {
+    public ResponseEntity<Atendente> updfate(@Valid @PathVariable Long id, @RequestBody AtendenteForm atendenteForm) {
         return ResponseEntity.status(HttpStatus.OK).body(atendenteService.update(id, atendenteForm));
     }
 

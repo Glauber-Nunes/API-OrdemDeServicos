@@ -1,25 +1,31 @@
 package com.gnsoftware.Ordem.Servico.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Servico {
+public class PDV {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descricao;
-    private Double preco;
 
+    @ManyToOne
+    @JoinColumn(name = "produto_id")
+    private Produto produto;
+    private String descricao;
+
+    private void venda(Produto produto){
+        double quantidade =0;
+
+        quantidade -= produto.getEstoque();
+    }
 }

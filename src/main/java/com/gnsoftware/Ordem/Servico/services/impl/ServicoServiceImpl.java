@@ -12,6 +12,8 @@ import com.gnsoftware.Ordem.Servico.services.exceptions.ModelNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,11 +36,38 @@ public class ServicoServiceImpl implements ServicoService {
     }
 
     @Override
+    @Transactional
+    public Servico update(Long id, ServicoForm servicoForm) {
+        Servico servicoBanco = this.findById(id);
+
+        Servico servico = Servico.builder()
+                .id(servicoBanco.getId())
+                .descricao(servicoForm.getDescricao() != null ? servicoForm.getDescricao() : servicoBanco.getDescricao())
+                .preco(servicoForm.getPreco() != null ? servicoForm.getPreco() : servicoBanco.getPreco())
+                .build();
+
+        return servicoRepository.saveAndFlush(servico);
+    }
+
+    @Override
     public Servico findById(Long id) {
 
         Optional<Servico> servico = servicoRepository.findById(id);
 
         return servico.orElseThrow(() -> new ModelNotFound("Servico Não Foi Encontrado"));
 
+    }
+
+    @Override
+    public List<Servico> findAll() {
+        return servicoRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        Servico servico = this.findById(id);
+
+        servicoRepository.delete(servico);
     }
 }

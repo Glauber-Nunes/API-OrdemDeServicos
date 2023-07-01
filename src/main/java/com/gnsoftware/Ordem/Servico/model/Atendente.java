@@ -1,6 +1,5 @@
 package com.gnsoftware.Ordem.Servico.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +9,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 @Entity
 @Builder
@@ -27,4 +25,5 @@ public class Atendente {
     private String nome;
     @CPF
     private String cpf;
+
 }

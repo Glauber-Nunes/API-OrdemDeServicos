@@ -17,4 +17,6 @@ public interface AtendenteService {
     List<Atendente> findAll();
 
     void delete(Long id);
+
+
 }

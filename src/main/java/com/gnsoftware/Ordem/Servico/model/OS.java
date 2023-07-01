@@ -1,6 +1,7 @@
 package com.gnsoftware.Ordem.Servico.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +34,9 @@ public class OS {
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
+    @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR", timezone = "America/Sao_Paulo")
     private Instant DataDoServico = Instant.now();
+
     private Double quantidade;
 
     @ManyToOne
@@ -41,8 +44,12 @@ public class OS {
     private Servico servico;
 
     @ManyToOne
-    @JoinColumn(name = "produtoServico_id")
+    @JoinColumn(name = "produto_id")
     private Produto produto;
+
+    @ManyToOne
+    @JoinColumn(name = "fonecedor_id")
+    private Fornecedor fornecedor;
 
     @Column(columnDefinition = "TEXT")
     private String observacoes;
@@ -50,5 +57,5 @@ public class OS {
     @JoinColumn(name = "status_id")
     private StatusOrdemServico statusOrdemServico;
 
-    private Double valorTotalOrdem = 0d;
+    private Double valorTotalOrdem = 0.0;
 }

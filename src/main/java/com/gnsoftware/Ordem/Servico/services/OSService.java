@@ -3,6 +3,8 @@ package com.gnsoftware.Ordem.Servico.services;
 import com.gnsoftware.Ordem.Servico.dto.OSForm;
 import com.gnsoftware.Ordem.Servico.model.OS;
 
+import java.util.List;
+
 public interface OSService {
 
     OS save(OSForm OSForm);
@@ -11,5 +13,8 @@ public interface OSService {
 
     OS findById(Long id);
 
-    OS delete(Long id);
+    void delete(Long id);
+
+    List<OS> findAll();
+    void finalizaServico (Long id,OS os);
 }

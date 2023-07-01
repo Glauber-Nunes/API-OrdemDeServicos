@@ -11,6 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProdutoForm {
 
+    private Long id;
     private String descricao;
     private Double preco;
+    private String codeBarras;
+    private String unEntrada;
+    private String unSaida;
+    private Double estoque;
 }

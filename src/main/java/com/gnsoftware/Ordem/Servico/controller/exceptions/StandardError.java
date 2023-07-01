@@ -15,6 +15,5 @@ public class StandardError {
     private Instant timestamp;
     private int status;
     private String Error;
-    private String messenger;
     private String path;
 }
