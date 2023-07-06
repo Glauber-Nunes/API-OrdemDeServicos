@@ -20,6 +20,6 @@ public class CargaStatusOrdemServicoBD implements CommandLineRunner {
         StatusOrdemServico ABERTA = new StatusOrdemServico(null, "ABERTA");
         StatusOrdemServico ENCERRADA = new StatusOrdemServico(null, "ENCERRADA");
 
-        statusOrdemServico.saveAll(Arrays.asList(ABERTA, ENCERRADA));
+        //statusOrdemServico.saveAll(Arrays.asList(ABERTA, ENCERRADA));
     }
 }

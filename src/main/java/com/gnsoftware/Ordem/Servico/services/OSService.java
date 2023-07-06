@@ -16,5 +16,5 @@ public interface OSService {
     void delete(Long id);
 
     List<OS> findAll();
-    void finalizaServico (Long id,OS os);
+    void finalizaOs (Long id,OS os);
 }

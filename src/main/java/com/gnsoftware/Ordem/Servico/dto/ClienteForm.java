@@ -20,7 +20,7 @@ public class ClienteForm {
     private Long id;
     @NotEmpty(message = "NOME REQUERIDO")
     private String nome;
-    @CPF
+
     private String cpf;
     private String rg;
     private String telefone;

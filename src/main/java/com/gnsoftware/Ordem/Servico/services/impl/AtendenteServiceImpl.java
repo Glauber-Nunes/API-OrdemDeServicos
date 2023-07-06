@@ -49,9 +49,7 @@ public class AtendenteServiceImpl implements AtendenteService {
     public Atendente findById(Long id) {
         Optional<Atendente> atendente = atendenteRepository.findById(id);
 
-        if (atendente == null) throw new ModelNotFound("Atendente Não Encontrado");
-
-        return atendente.get();
+        return atendente.orElseThrow(() -> new ModelNotFound("Atendente Não Encontrado"));
     }
 
     @Override

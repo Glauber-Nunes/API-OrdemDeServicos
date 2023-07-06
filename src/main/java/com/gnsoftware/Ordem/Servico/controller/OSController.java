@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin("*")
@@ -28,14 +29,19 @@ public class OSController {
         return ResponseEntity.status(HttpStatus.CREATED).body(OSService.save(OSForm));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<OS> update(@PathVariable Long id, @RequestBody OSForm osForm) {
+        return ResponseEntity.status(HttpStatus.OK).body(OSService.update(id, osForm));
+    }
+
     @GetMapping
     public ResponseEntity<List<OS>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(OSService.findAll());
     }
 
     @PutMapping("/finalizar-servico/{id}")
-    public ResponseEntity<String> finalizaServico(@PathVariable Long id,@RequestBody OS os) {
-        OSService.finalizaServico(id,os);
+    public ResponseEntity<String> finalizaOs(@PathVariable Long id, @RequestBody OS os) {
+        OSService.finalizaOs(id, os);
 
         JSONObject response = new JSONObject();
         response.put("message", "FINALIZADO COM SUCESSO");
@@ -44,7 +50,7 @@ public class OSController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<String> delete(@PathVariable Long id){
+    private ResponseEntity<String> delete(@PathVariable Long id) {
         OSService.delete(id);
 
         JSONObject response = new JSONObject();

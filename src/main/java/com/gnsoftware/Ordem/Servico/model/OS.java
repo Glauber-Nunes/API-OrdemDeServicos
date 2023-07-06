@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Data
@@ -34,8 +35,11 @@ public class OS {
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
-    @JsonFormat(pattern = "dd/MM/yyyy", locale = "pt-BR", timezone = "America/Sao_Paulo")
-    private Instant DataDoServico = Instant.now();
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", locale = "pt-BR", timezone = "America/Sao_Paulo")
+    private Date DataDoServico ;
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", locale = "pt-BR", timezone = "America/Sao_Paulo")
+    private Date DataFechamento;
 
     private Double quantidade;
 

@@ -27,7 +27,7 @@ public class Cliente {
     private String cpf;
     private String rg;
     private String telefone;
-    @Column(unique = true)
+
     @Email(message = "Email INCORRETO")
     private String email;
     private String endereco;
